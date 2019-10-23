@@ -7,6 +7,7 @@ const $messageFormBtn = $messageForm.querySelector('button');
 const $shareLocationBtn = document.querySelector('#shareLocation');
 const $messages = document.querySelector('#messages');
 const $sidebar = document.querySelector('#sidebar');
+const $users = document.querySelectorAll('#sidebar .users li');
 
 // Templates
 const messageTemplate = document.querySelector('#messageTemplate').innerHTML;
@@ -82,10 +83,6 @@ $shareLocationBtn.addEventListener('click', () => {
 			}
 		);
 	});
-});
-
-socket.on('activeLobbies', () => {
-	console.log('Recieved active lobbies');
 });
 
 socket.on('message', svrMsgObj => {

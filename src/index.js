@@ -13,7 +13,7 @@ const {
 	getUser,
 	getUsersInLobby
 } = require('./utils/users');
-const { addLobby, removeLobby } = require('./utils/lobbies');
+const { addLobby, removeLobby, lobbies } = require('./utils/lobbies');
 
 const app = express();
 const server = http.createServer(app);
@@ -27,7 +27,7 @@ app.use(express.static('public'));
 io.on('connection', socket => {
 	console.log('New WebSocket connection');
 
-	socket.emit('activeLobbies');
+	io.emit('activeLobbies', { lobbies });
 
 	socket.on('join', (userInfo, cb) => {
 		const { error, user } = addUser({ id: socket.id, ...userInfo });
@@ -87,6 +87,7 @@ io.on('connection', socket => {
 		const user = removeUser(socket.id);
 
 		if (user) {
+			removeLobby(user.lobby);
 			io.to(user.lobby).emit(
 				'message',
 				generateMessage('Admin', `${user.username} has left`)
@@ -96,8 +97,6 @@ io.on('connection', socket => {
 				users: getUsersInLobby(user.lobby)
 			});
 		}
-
-		removeLobby(user.lobby);
 	});
 });
 

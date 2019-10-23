@@ -6,6 +6,10 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title>Document</title>
 		<link rel="stylesheet" href="./css/styles.css" />
+		<script
+			src="https://kit.fontawesome.com/d44d58da40.js"
+			crossorigin="anonymous"
+		></script>
 	</head>
 	<body>
 		<div class="centered-form">
@@ -22,11 +26,30 @@
 					/>
 
 					<label for="">Chat Lobby</label>
-					<input type="text" name="lobby" placeholder="Lobby Name" required />
+					<input
+						list="activeLobbies"
+						type="text"
+						name="lobby"
+						placeholder="Lobby Name"
+						required
+						autocomplete="off"
+					/>
 
 					<button>Join</button>
 				</form>
 			</div>
 		</div>
+
+		<script id="dropdownTemplate" type="text/html">
+			<datalist id="activeLobbies">
+				{{#lobbies}}
+				<option value='{{.}}'>
+				{{/lobbies}}
+			</datalist>
+		</script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/js/index.js"></script>
 	</body>
 </html>
